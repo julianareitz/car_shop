@@ -1,8 +1,8 @@
-import Car from '../Domains/Car.domain';
+import Car from '../Domains/Car';
 import ICar from '../Interfaces/ICar';
 import CarODM from '../Models/CarODM';
 
-export default class CarService {
+export default class CarsService {
   private registerCarDomain(car: ICar | null): Car | null {
     if (car) {
       return new Car(car);
