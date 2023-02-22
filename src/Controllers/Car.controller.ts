@@ -1,0 +1,52 @@
+import { Request, Response, NextFunction } from 'express';
+import ICar from '../Interfaces/ICar';
+
+import CarService from '../Services/Car.service';
+
+export default class CarsController {
+  private req: Request;
+  private res: Response;
+  private next: NextFunction;
+  private service: CarService;
+
+  constructor(req: Request, res: Response, next: NextFunction) {
+    this.req = req;
+    this.res = res;
+    this.next = next;
+    this.service = new CarService();
+  }
+
+  public async register() {
+    const car: ICar = {
+      model: this.req.body.model,
+      year: this.req.body.year,
+      color: this.req.body.color,
+      status: this.req.body.status || false,
+      buyValue: this.req.body.buyValue,
+      doorsQty: this.req.body.doorsQty,
+      seatsQty: this.req.body.seatsQty,  
+    };
+
+    try {
+      const newCar = await this.service.register(car);
+      return this.res.status(201).json(newCar);
+    } catch (err) {
+      this.next(err);
+    }
+  }
+
+  public async getAll() {
+    const getAll = await this.service.getAll();
+    return this.res.status(200).json(getAll);
+  }
+
+  public async getById() {
+    try {
+      const { id } = this.req.params;
+      const getOne = await this.service.getById(id);
+      return this.res.status(200).json(getOne);
+    } catch (err) {
+      this.next(err);
+    }
+  }
+}
