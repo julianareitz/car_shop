@@ -46,8 +46,20 @@ export default class CarsController {
     const getOne = await this.service.getById(id);
 
     if (getOne === 'NOT_FOUND') {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });  
+      return this.res.status(404).json({ message: 'Car not found' });  
     }
     return this.res.status(200).json(getOne);
+  }
+
+  public async update() {
+    const car = this.req.body;
+    const { id } = this.req.params;
+
+    const update = await this.service.update(id, car);
+
+    if (update === 'NOT_FOUND') {
+      return this.res.status(404).json({ message: 'Car not found' });  
+    }
+    return this.res.status(200).json(update);
   }
 }
