@@ -1,32 +1,26 @@
 import { Request, Router, Response, NextFunction } from 'express';
 import MotorcycleController from '../Controllers/MotorcycleController';
-// import ValidateId from '../Middlewares/ValidateId';
+import ValidateId from '../Middlewares/ValidateId';
 
-const CarRouter = Router();
+const MotorcycleRouter = Router();
 
-CarRouter.post(
+MotorcycleRouter.post(
   '/',
   (req: Request, res: Response, next: NextFunction) => new MotorcycleController(req, res, next)
     .register(),
 );
 
-// CarRouter.get(
-//   '/',
-//   (req: Request, res: Response, next: NextFunction) => new CarsController(req, res, next)
-//     .getAll(),
-// );
+MotorcycleRouter.get(
+  '/',
+  (req: Request, res: Response, next: NextFunction) => new MotorcycleController(req, res, next)
+    .getAll(),
+);
 
-// CarRouter.get(
-//   '/:id',
-//   ValidateId,
-//   (req: Request, res: Response, next: NextFunction) => new CarsController(req, res, next)
-//     .getById(),
-// );
+MotorcycleRouter.get(
+  '/:id',
+  ValidateId,
+  (req: Request, res: Response, next: NextFunction) => new MotorcycleController(req, res, next)
+    .getById(),
+);
 
-// CarRouter.put(
-//   '/:id',
-//   ValidateId,
-//   (req, res, next) => new CarsController(req, res, next).update(),
-// );
-
-export default CarRouter;
+export default MotorcycleRouter;
